@@ -7,8 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/react": "^16.8.13",
+    "@types/react-native": "^0.57.42",
     "react": "16.8.3",
-    "react-native": "0.59.3"
+    "react-native": "0.59.3",
+    "typescript": "^3.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
