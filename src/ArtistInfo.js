@@ -1,11 +1,12 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 
-export default function Item({size, listeners, percent, name, isSelected}) {
-  return <View style={{width: size}}>
+export default function ArtistInfo({id, size,url,  listeners, percent, name, isSelected, onPress}) {
+  console.log('ArtistInfo.render');
+  return <TouchableOpacity onPress={() => onPress(id)} style={{width: size}}>
     <View style={{width: size, height: size}}>
       <Image style={{width: size, height: size, borderRadius: BORDER_RADIUS}}
-             source={{uri: 'https://picsum.photos/g/132/132/?length=30'}}/>
+             source={{uri: url}}/>
 
       <View style={[s.bar]}>
         <Text style={s.listeners}>{numberWithSpaces(listeners)}</Text>
@@ -17,7 +18,7 @@ export default function Item({size, listeners, percent, name, isSelected}) {
     <View>
       <Text style={[s.artistTitle, isSelected && s.selectedTitle]}>{name}</Text>
     </View>
-  </View>;
+  </TouchableOpacity>;
 }
 
 const SELECTION_COLOR = 'green';
