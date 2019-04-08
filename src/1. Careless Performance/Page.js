@@ -10,7 +10,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Item name="Some Name" size={size} listeners={137000} percent={50}/>
-        <Item name="Another Name" size={size} listeners={60000} percent={25}/>
+        <Item isSelected name="Another Name" size={size} listeners={60000} percent={25}/>
       </View>
     );
   }

@@ -1,7 +1,7 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-export default function Item({size, listeners, percent, name}) {
+export default function Item({size, listeners, percent, name, isSelected}) {
   return <View style={{width: size}}>
     <View style={{width: size, height: size}}>
       <Image style={{width: size, height: size, borderRadius: BORDER_RADIUS}}
@@ -12,22 +12,22 @@ export default function Item({size, listeners, percent, name}) {
         <View style={[s.bar, s.filledBar, {width: size * (percent / 100)}]}>
         </View>
       </View>
+      {isSelected && <View style={s.selectedBorder}/>}
     </View>
     <View>
-      <Text style={s.artistTitle}>{name}</Text>
+      <Text style={[s.artistTitle, isSelected && s.selectedTitle]}>{name}</Text>
     </View>
   </View>;
 }
 
+const SELECTION_COLOR = 'green';
 const BORDER_RADIUS = 6;
 
 const s = StyleSheet.create({
   bar: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    left: 0,
-    height: 25,
+    ...StyleSheet.absoluteFillObject,
+    top: undefined,
+    height: 30,
     borderBottomLeftRadius: BORDER_RADIUS,
     borderBottomRightRadius: BORDER_RADIUS,
     backgroundColor: 'rgba(0,0,0,0.3)',
@@ -43,6 +43,16 @@ const s = StyleSheet.create({
   },
   artistTitle: {
     fontSize: 21, textAlign: 'center',
+  },
+  selectedTitle: {
+    color: SELECTION_COLOR,
+  },
+  selectedBorder: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: BORDER_RADIUS,
+    borderWidth: 4,
+    borderColor: SELECTION_COLOR,
+    borderStyle: 'solid',
   },
 });
 
