@@ -7,8 +7,12 @@ import { LoadingIndicator } from "../shared/LoadingIndicator";
 import styles from '../shared/styles';
 
 class CarelessRenders extends React.Component {
-  static navigationOptions = {
-    title: "Careless FlatList"
+  static navigationOptions = ({navigation}) => {
+    const {state} = navigation;
+    const count = state.params ? state.params.artistsCount : 0;
+    return {
+      title: `Slow. Artists: ${count | 0}`,
+    };
   };
 
   state = {
@@ -33,6 +37,7 @@ class CarelessRenders extends React.Component {
     const newArtists = this.state.artists.concat(artists);
 
     this.setState({ artists: updatePercents(newArtists) });
+    this.props.navigation.setParams({artistsCount: newArtists.length});
   };
 
   loadMoreItems = () => {

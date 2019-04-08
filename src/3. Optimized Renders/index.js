@@ -7,8 +7,12 @@ import {LoadingIndicator} from "../shared/LoadingIndicator";
 import styles from "../shared/styles";
 
 class CarelessRenders extends React.Component {
-  static navigationOptions = {
-    title: "Optimized FlatList",
+  static navigationOptions = ({navigation}) => {
+    const {state} = navigation;
+    const count = state.params ? state.params.artistsCount : 0;
+    return {
+      title: `Quick. Artists: ${count | 0}`,
+    };
   };
 
   state = {
@@ -21,18 +25,20 @@ class CarelessRenders extends React.Component {
     this.loadMoreItems();
   }
 
-  onPress = id =>
+  onPress = id => {
     this.setState({
       selected: {
         ...this.state.selected,
         [id]: !this.state.selected[id],
       },
     });
+  };
 
   concatMoreArtists = artists => {
     const newArtists = this.state.artists.concat(artists);
 
     this.setState({artists: updatePercents(newArtists)});
+    this.props.navigation.setParams({artistsCount: newArtists.length});
   };
 
   loadMoreItems = () => {
