@@ -1,39 +1,41 @@
 import React from "react";
-import {InteractionManager, Text, View} from "react-native";
+import { InteractionManager, Text, View } from "react-native";
 import ArtistInfo from "../shared/ArtistInfo";
-import {LoadingIndicator} from "../shared/LoadingIndicator";
+import { LoadingIndicator } from "../shared/LoadingIndicator";
 
 class CarelessRenders extends React.Component {
   static navigationOptions = {
-    title: "Interaction Manager",
+    title: "Interaction Manager"
   };
   state = {
     minValue: 0,
     maxValue: 0,
     count: 100000000,
-    isRunning: false,
+    isRunning: false
   };
 
   calculateSmooth = () => {
-    this.setState({isRunning: true}, () => InteractionManager.runAfterInteractions(this.calculate));
+    this.setState({ isRunning: true }, () =>
+      InteractionManager.runAfterInteractions(this.calculate)
+    );
   };
 
   calculateLaggy = () => {
-    this.setState({isRunning: true}, this.calculate);
+    this.setState({ isRunning: true }, this.calculate);
   };
 
   calculate = () => {
     let minValue = Number.MAX_VALUE;
     let maxValue = 0;
     for (let i = 0; i < this.state.count; i++) {
-      const rand = Math.random(1000);
+      const rand = Math.random() * this.state.count;
       if (rand < minValue) minValue = rand;
       if (rand > maxValue) maxValue = rand;
     }
     this.setState({
       minValue,
       maxValue,
-      isRunning: false,
+      isRunning: false
     });
   };
 
@@ -43,7 +45,7 @@ class CarelessRenders extends React.Component {
         style={{
           flex: 1,
           justifyContent: "space-around",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <ArtistInfo
@@ -54,14 +56,18 @@ class CarelessRenders extends React.Component {
           name={"Laggy"}
           url="https://picsum.photos/g/132/132/?length=10"
         />
-        <View style={{height: 50}}>
+        <View style={{ height: 50 }}>
           {this.state.isRunning ? (
-            <LoadingIndicator/>
+            <LoadingIndicator />
           ) : (
-            <Text>
-              Run {this.state.count} samples. Min {this.state.minValue}. Max:{" "}
-              {this.state.maxValue}
-            </Text>
+            <View>
+              <Text>
+                Created {this.state.count} random numbers from 0 to{" "}
+                {this.state.count}.{" "}
+              </Text>
+              <Text>Min {this.state.minValue}.</Text>
+              <Text>Max: {this.state.maxValue}</Text>
+            </View>
           )}
         </View>
         <ArtistInfo
