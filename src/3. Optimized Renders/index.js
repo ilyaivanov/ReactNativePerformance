@@ -1,20 +1,20 @@
 import React from "react";
-import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import {Dimensions, FlatList, View} from "react-native";
 import ArtistInfo from "../shared/ArtistInfo";
-import { fetchArtist, updatePercents } from "../shared/api";
-import { ITEM_PADDING } from "../shared/constrants";
-import { LoadingIndicator } from "../shared/LoadingIndicator";
-import styles from '../shared/styles';
+import {fetchArtist, updatePercents} from "../shared/api";
+import {ITEM_PADDING} from "../shared/constrants";
+import {LoadingIndicator} from "../shared/LoadingIndicator";
+import styles from "../shared/styles";
 
 class CarelessRenders extends React.Component {
   static navigationOptions = {
-    title: "Careless FlatList"
+    title: "Optimized FlatList",
   };
 
   state = {
     artists: [],
     currentPage: 0,
-    selected: {}
+    selected: {},
   };
 
   componentDidMount() {
@@ -25,44 +25,48 @@ class CarelessRenders extends React.Component {
     this.setState({
       selected: {
         ...this.state.selected,
-        [id]: !this.state.selected[id]
-      }
+        [id]: !this.state.selected[id],
+      },
     });
 
   concatMoreArtists = artists => {
     const newArtists = this.state.artists.concat(artists);
 
-    this.setState({ artists: updatePercents(newArtists) });
+    this.setState({artists: updatePercents(newArtists)});
   };
 
   loadMoreItems = () => {
     const newPage = this.state.currentPage + 1;
-    this.setState({ currentPage: newPage });
+    this.setState({currentPage: newPage});
     fetchArtist("spain", newPage).then(this.concatMoreArtists);
   };
+
+  firstItemStyle = [styles.artistContainer, styles.firstArtistInRow];
 
   render() {
     const size = (Dimensions.get("window").width - ITEM_PADDING * 6) / 3;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <FlatList
           contentContainerStyle={[
             styles.listContainer,
-            this.state.artists.length === 0 && styles.emptyList
+            this.state.artists.length === 0 && styles.emptyList,
           ]}
           data={this.state.artists}
           keyExtractor={ar => ar.id}
           numColumns={3}
           onEndReached={this.loadMoreItems}
           onEndReachedThreshold={0.1}
-          ListFooterComponent={<LoadingIndicator />}
-          renderItem={({ item, index }) => (
+          ListFooterComponent={<LoadingIndicator/>}
+          renderItem={({item, index}) => (
             <ArtistInfo
-              style={[styles.artistContainer, index % 3 === 0 && styles.firstArtistInRow]}
+              style={
+                index % 3 === 0 ? this.firstItemStyle : styles.artistContainer
+              }
               size={size}
               percent={item.percent}
               id={item.id}
-              onPress={() => this.onPress(item.id)}
+              onPress={this.onPress}
               isSelected={this.state.selected[item.id]}
               name={item.name}
               url={item.image}
@@ -73,6 +77,5 @@ class CarelessRenders extends React.Component {
     );
   }
 }
-
 
 export default CarelessRenders;

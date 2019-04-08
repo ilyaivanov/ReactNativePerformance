@@ -3,7 +3,7 @@ import React from "react";
 import tinycolor2 from "tinycolor2";
 import { BORDER_RADIUS, PRIMARY_COLOR } from "./constrants";
 
-export default function ArtistInfo({
+function ArtistInfo({
   style,
   id,
   size,
@@ -43,6 +43,8 @@ export default function ArtistInfo({
     </TouchableOpacity>
   );
 }
+
+export default React.memo(ArtistInfo);
 
 const s = StyleSheet.create({
   bar: {

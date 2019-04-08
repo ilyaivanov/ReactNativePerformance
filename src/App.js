@@ -4,6 +4,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TwoArtists from "./1. Two Artists";
 import CarelessRenders from "./2. Careless Renders";
+import Optimized from "./3. Optimized Renders";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 
 class HomeScreen extends React.Component {
@@ -22,9 +23,15 @@ class HomeScreen extends React.Component {
         />
         <PageLink
           {...this.props}
-          text="Care-less renders in a big FlatList. To feel the most significant difference use old Android device, turn on Power Save mode and scroll as down as possible before pressing on the items"
+          text="Unoptimized FlatList"
           pageName="CarelessRenders"
           backgroundColor="red"
+        />
+        <PageLink
+          {...this.props}
+          text="Optimized version of a FlatList"
+          pageName="OptimizedRenders"
+          backgroundColor="green"
         />
       </View>
     );
@@ -44,7 +51,7 @@ const s = StyleSheet.create({
   link: {
     justifyContent: "center",
     alignItems: "center",
-    height: 150
+    height: 100
   },
   linkText: {
     textAlign: "center",
@@ -61,6 +68,9 @@ const AppNavigator = createStackNavigator({
   },
   CarelessRenders: {
     screen: CarelessRenders
+  },
+  OptimizedRenders: {
+    screen: Optimized
   }
 });
 
