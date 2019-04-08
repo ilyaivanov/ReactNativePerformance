@@ -3,6 +3,10 @@ import {Dimensions, SafeAreaView, StyleSheet, Text, View} from "react-native";
 import ArtistInfo from "../ArtistInfo";
 
 export default class App extends Component {
+  static navigationOptions = {
+    title: 'Two Artists',
+  };
+
   state = {
     selected: {
       "1": false,
