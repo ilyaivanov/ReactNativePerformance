@@ -11,14 +11,11 @@ function ArtistInfo({
   percent,
   name,
   isSelected,
-  onPress
+  onPress,
 }) {
   console.log("ArtistInfo.render");
   return (
-    <TouchableOpacity
-      onPress={() => onPress(id)}
-      style={[{ width: size }, style]}
-    >
+    <TouchableOpacity onPress={() => onPress(id)} style={[{ width: size }, style]}>
       <View style={{ width: size, height: size }}>
         <Image
           style={{ width: size, height: size, borderRadius: BORDER_RADIUS }}

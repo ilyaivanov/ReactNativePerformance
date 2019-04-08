@@ -30,7 +30,7 @@ export default class App extends Component {
         url: "https://picsum.photos/g/132/132/?length=14",
         name: "Artist 1",
         listeners: 137000,
-        percent: 45
+        percent: 70
       },
       {
         id: "2",

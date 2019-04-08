@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TwoArtists from "./1. Two Artists";
 import CarelessRenders from "./2. Careless Renders";
 import Optimized from "./3. Optimized Renders";
+import InteractionManager from "./4. InteractionManager demo";
 import { createAppContainer, createStackNavigator } from "react-navigation";
 
 class HomeScreen extends React.Component {
@@ -32,6 +33,12 @@ class HomeScreen extends React.Component {
           text="Optimized version of a FlatList"
           pageName="OptimizedRenders"
           backgroundColor="green"
+        />
+        <PageLink
+          {...this.props}
+          text="Halt on long operations"
+          pageName="InteractionManager"
+          backgroundColor="#eeeeee"
         />
       </View>
     );
@@ -71,6 +78,9 @@ const AppNavigator = createStackNavigator({
   },
   OptimizedRenders: {
     screen: Optimized
+  },
+  InteractionManager: {
+    screen: InteractionManager
   }
 });
 
