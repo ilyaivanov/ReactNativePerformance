@@ -1,22 +1,23 @@
 // In App.js in a new project
 
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import TwoArtists from "./1. Two Artists";
 import CarelessRenders from "./2. Careless Renders";
 import Optimized from "./3. Optimized Renders";
 import CarelessHooks from "./4. Careless Hooks";
+import OptimizedHooks from "./5. Optimized Hooks";
 import InteractionManager from "./6. InteractionManager demo";
-import { createAppContainer, createStackNavigator } from "react-navigation";
+import {createAppContainer, createStackNavigator} from "react-navigation";
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: "React-Native Performance"
+    title: "React-Native Performance",
   };
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <PageLink
           {...this.props}
           text="Two Artists side by side. Use for testing why-did-you-update tools or profiles. Selecting one artist will trigger a render in another"
@@ -43,6 +44,12 @@ class HomeScreen extends React.Component {
         />
         <PageLink
           {...this.props}
+          text="Optimized hooks"
+          pageName="OptimizedHooks"
+          backgroundColor="#eeeeee"
+        />
+        <PageLink
+          {...this.props}
           text="Halt on long operations"
           pageName="InteractionManager"
           backgroundColor="#eeeeee"
@@ -52,9 +59,9 @@ class HomeScreen extends React.Component {
   }
 }
 
-const PageLink = ({ text, pageName, navigation, backgroundColor }) => (
+const PageLink = ({text, pageName, navigation, backgroundColor}) => (
   <TouchableOpacity
-    style={[s.link, { backgroundColor }]}
+    style={[s.link, {backgroundColor}]}
     onPress={() => navigation.navigate(pageName)}
   >
     <Text style={s.linkText}>{text}</Text>
@@ -65,36 +72,36 @@ const s = StyleSheet.create({
   link: {
     justifyContent: "center",
     alignItems: "center",
-    height: 100
+    height: 100,
   },
   linkText: {
     textAlign: "center",
-    fontSize: 23
-  }
+    fontSize: 23,
+  },
 });
 
 const AppNavigator = createStackNavigator({
   Home: {
-    screen: HomeScreen
+    screen: HomeScreen,
   },
   TwoArtists: {
-    screen: TwoArtists
+    screen: TwoArtists,
   },
   CarelessRenders: {
-    screen: CarelessRenders
+    screen: CarelessRenders,
   },
   OptimizedRenders: {
-    screen: Optimized
+    screen: Optimized,
   },
   CarelessHooks: {
-    screen: CarelessHooks
+    screen: CarelessHooks,
   },
-  // OptimizedHooks: {
-  //   screen: OptimizedHooks
-  // },
+  OptimizedHooks: {
+    screen: OptimizedHooks,
+  },
   InteractionManager: {
-    screen: InteractionManager
-  }
+    screen: InteractionManager,
+  },
 });
 
 export default createAppContainer(AppNavigator);

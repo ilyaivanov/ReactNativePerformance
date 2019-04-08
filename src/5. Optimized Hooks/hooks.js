@@ -1,17 +1,12 @@
-import {useState} from 'react';
+import {useState, useReducer} from 'react';
 import {fetchArtist, updatePercents} from '../shared/api';
 
 export const useArtistSelection = () => {
-  const [selected, setSelected] = useState({});
-  return [
-    selected,
-    id => {
-      setSelected({
-        ...selected,
-        [id]: !selected[id],
-      });
-    },
-  ];
+  const reducer = (selected, id) => ({
+    ...selected,
+    [id]: !selected[id]
+  });
+  return useReducer(reducer, {});
 };
 
 export const useArtists = () => {
