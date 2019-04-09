@@ -1,7 +1,5 @@
-// In App.js in a new project
-
 import React from "react";
-import {ScrollView, StyleSheet, Text, TouchableOpacity} from "react-native";
+import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import TwoArtists from "./1. Two Artists";
 import CarelessRenders from "./2. Careless Renders";
 import Optimized from "./3. Optimized Renders";
@@ -10,20 +8,54 @@ import OptimizedHooks from "./5. Optimized Hooks";
 import InteractionManager from "./6. InteractionManager demo";
 import NonnativeAnimation from "./7. Non-native animation";
 import NativeAnimation from "./8. Native animation";
-import {createAppContainer, createStackNavigator} from "react-navigation";
-import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue';
-
-
-let messageCount = 0;
-const logSpy = (info) => {
-  const fromTo = info.type === 0 ? 'TO JS: ' : 'TO NATIVE: ';
-  const methodSignature = info.module + '.' + info.method + '(' + JSON.stringify(info.args) + ')';
-  messageCount++;
-  console.log(messageCount, fromTo, methodSignature);
-};
-
+import {createAppContainer, createStackNavigator, Header} from "react-navigation";
+import {PRIMARY_COLOR} from './shared/constrants';
 //uncomment for enable bridge logging
-MessageQueue.spy(logSpy);
+// import 'initiateLogger';
+const red = '#D32F2F';
+const green = '#388E3C';
+const items = [
+  {
+    text: "Two artists side by side",
+    pageName: "TwoArtists",
+    backgroundColor: PRIMARY_COLOR,
+  },
+  {
+    text: "Careless FlatList",
+    pageName: "CarelessRenders",
+    backgroundColor: red,
+  },
+  {
+    text: "Optimized FlatList",
+    pageName: "OptimizedRenders",
+    backgroundColor: green,
+  },
+  {
+    text: "Careless Hooks",
+    pageName: "CarelessHooks",
+    backgroundColor: red,
+  },
+  {
+    text: "Optimized Hooks",
+    pageName: "OptimizedHooks",
+    backgroundColor: green,
+  },
+  {
+    text: "Long operations",
+    pageName: "InteractionManager",
+    backgroundColor: PRIMARY_COLOR,
+  },
+  {
+    text: "Careless animation (non-native)",
+    pageName: "NonnativeAnimation",
+    backgroundColor: red,
+  },
+  {
+    text: "Optimized animation (native)",
+    pageName: "NativeAnimation",
+    backgroundColor: green,
+  },
+];
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -31,46 +63,12 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    const items = [
-      {
-        text:
-          "Two Artists side by side. Use for testing why-did-you-update tools or profiles. Selecting one artist will trigger a render in another",
-        pageName: "TwoArtists",
-      }, {
-        text:
-          "Unoptimized FlatList",
-        pageName: "CarelessRenders",
-      }, {
-        text: "Optimized version of a FlatList",
-        pageName: "OptimizedRenders",
-      }, {
-        text: "Careless hooks",
-        pageName: "CarelessHooks",
-      }, {
-        text: "Optimized hooks",
-        pageName: "OptimizedHooks",
-      }, {
-        text: "Halt on long operations",
-        pageName: "InteractionManager",
-      }, {
-        text: "Non-native animation",
-        pageName: "NonnativeAnimation",
-      }, {
-        text: "Native animation",
-        pageName: "NativeAnimation",
-      },
-    ];
     return (
-      <ScrollView>
-        {
-          items.map(item =>
-            <PageLink
-              {...this.props}
-              key={item.pageName}
-              {...item}
-            />)
-        }
-      </ScrollView>
+      <View>
+        {items.map(item => (
+          <PageLink {...this.props} {...item} key={item.pageName}/>
+        ))}
+      </View>
     );
   }
 }
@@ -88,9 +86,10 @@ const s = StyleSheet.create({
   link: {
     justifyContent: "center",
     alignItems: "center",
-    height: 70,
+    height: (Dimensions.get("window").height - Header.HEIGHT) / items.length,
   },
   linkText: {
+    color: "white",
     textAlign: "center",
     fontSize: 23,
   },
