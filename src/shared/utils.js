@@ -10,5 +10,5 @@ export const toggleColumns = currentColumns => {
 };
 
 export const getArtistSize = numberOfColumns =>
-  (Dimensions.get("window").width - ITEM_PADDING * (4 + numberOfColumns - 1)) /
+  (Dimensions.get("window").width - ITEM_PADDING * (2 + numberOfColumns - 1)) /
   numberOfColumns;
