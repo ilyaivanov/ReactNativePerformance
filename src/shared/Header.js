@@ -1,6 +1,7 @@
-import { Animated, Text } from "react-native";
-import { HEADER_HEIGHT, PRIMARY_COLOR } from "./constrants";
+import { Animated, Text, TouchableOpacity } from "react-native";
+import { BORDER_RADIUS, HEADER_HEIGHT, PRIMARY_COLOR } from "./constrants";
 import React from "react";
+import tinycolor2 from "tinycolor2";
 
 const getSelectedArtists = (selected, artists) => {
   return Object.keys(selected)
@@ -22,7 +23,7 @@ const getSelectedListeners = (selected, artists) => {
 const numberWithSpaces = x =>
   x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-const Header = ({ selected, artists, style }) => (
+const Header = ({ selected, artists, style, toggleView }) => (
   <Animated.View
     style={[
       {
@@ -37,6 +38,25 @@ const Header = ({ selected, artists, style }) => (
       style
     ]}
   >
+    {toggleView && (
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          top: 5,
+          right: 5,
+          borderRadius: BORDER_RADIUS,
+          padding: 5,
+          backgroundColor: tinycolor2(PRIMARY_COLOR)
+            .darken(20)
+            .toRgbString()
+        }}
+        onPress={toggleView}
+      >
+        <Text style={{ fontSize: 16, color: "rgba(255,255,255, 0.8)" }}>
+          Toggle
+        </Text>
+      </TouchableOpacity>
+    )}
     <Text style={{ fontSize: 23, color: "white" }}>Lithuania top artists</Text>
     <Text style={{ fontSize: 16, color: "rgba(255,255,255, 0.8)" }}>
       Selected {selectedCount(selected, artists)} with total listeners{" "}

@@ -1,11 +1,22 @@
 import React from "react";
-import { Animated, Dimensions, FlatList, View } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  FlatList,
+  View,
+  NativeModules,
+  LayoutAnimation
+} from "react-native";
 import ArtistInfo from "../shared/ArtistInfo";
 import { fetchArtist, updatePercents } from "../shared/api";
 import { HEADER_HEIGHT, ITEM_PADDING } from "../shared/constrants";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import styles from "../shared/styles";
 import Header from "../shared/Header";
+
+const { UIManager } = NativeModules;
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 
 class NativeAnimation extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -19,7 +30,8 @@ class NativeAnimation extends React.Component {
   state = {
     artists: [],
     currentPage: 0,
-    selected: {}
+    selected: {},
+    numberOfColumns: 2
   };
 
   componentDidMount() {
@@ -67,11 +79,24 @@ class NativeAnimation extends React.Component {
     ]
   };
 
+  toggleView = () => {
+    const maxColumns = 5;
+    const minColumns = 2;
+    const nextColumns = this.state.numberOfColumns + 1;
+    const numberOfColumns = nextColumns > maxColumns ? minColumns : nextColumns;
+    LayoutAnimation.spring();
+    this.setState({ numberOfColumns });
+  };
+
   render() {
-    const size = (Dimensions.get("window").width - ITEM_PADDING * 6) / 3;
+    const size =
+      (Dimensions.get("window").width -
+        ITEM_PADDING * (4 + this.state.numberOfColumns - 1)) /
+      this.state.numberOfColumns;
     return (
       <View style={{ flex: 1 }}>
         <Animated.FlatList
+          key={"FlatList" + this.state.numberOfColumns}
           bounces={false}
           contentContainerStyle={[
             styles.listContainer,
@@ -85,14 +110,16 @@ class NativeAnimation extends React.Component {
           )}
           data={this.state.artists}
           keyExtractor={ar => ar.id}
-          numColumns={3}
+          numColumns={this.state.numberOfColumns}
           onEndReached={this.loadMoreItems}
           onEndReachedThreshold={0.1}
           ListFooterComponent={<LoadingIndicator />}
           renderItem={({ item, index }) => (
             <ArtistInfo
               style={
-                index % 3 === 0 ? this.firstItemStyle : styles.artistContainer
+                index % this.state.numberOfColumns === 0
+                  ? this.firstItemStyle
+                  : styles.artistContainer
               }
               size={size}
               percent={item.percent}
@@ -108,6 +135,7 @@ class NativeAnimation extends React.Component {
           artists={this.state.artists}
           selected={this.state.selected}
           style={this.headerStyle}
+          toggleView={this.toggleView}
         />
       </View>
     );
