@@ -21,7 +21,8 @@ class CarelessRenders extends React.Component {
   };
 
   calculateLaggy = () => {
-    this.setState({ isRunning: true }, this.calculate);
+    //this set state is being ignored, just showing that it doesn't work this way
+    this.setState({ isRunning: true }, () => this.calculate());
   };
 
   calculate = () => {

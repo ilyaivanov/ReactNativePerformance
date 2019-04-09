@@ -8,7 +8,22 @@ import Optimized from "./3. Optimized Renders";
 import CarelessHooks from "./4. Careless Hooks";
 import OptimizedHooks from "./5. Optimized Hooks";
 import InteractionManager from "./6. InteractionManager demo";
+import NonnativeAnimation from "./7. Non-native animation";
+import NativeAnimation from "./8. Native animation";
 import {createAppContainer, createStackNavigator} from "react-navigation";
+import MessageQueue from 'react-native/Libraries/BatchedBridge/MessageQueue';
+
+
+let messageCount = 0;
+const logSpy = (info) => {
+  const fromTo = info.type === 0 ? 'TO JS: ' : 'TO NATIVE: ';
+  const methodSignature = info.module + '.' + info.method + '(' + JSON.stringify(info.args) + ')';
+  messageCount++;
+  console.log(messageCount, fromTo, methodSignature);
+};
+
+//uncomment for enable bridge logging
+MessageQueue.spy(logSpy);
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -37,6 +52,12 @@ class HomeScreen extends React.Component {
       }, {
         text: "Halt on long operations",
         pageName: "InteractionManager",
+      }, {
+        text: "Non-native animation",
+        pageName: "NonnativeAnimation",
+      }, {
+        text: "Native animation",
+        pageName: "NativeAnimation",
       },
     ];
     return (
@@ -67,7 +88,7 @@ const s = StyleSheet.create({
   link: {
     justifyContent: "center",
     alignItems: "center",
-    height: 100,
+    height: 70,
   },
   linkText: {
     textAlign: "center",
@@ -96,6 +117,12 @@ const AppNavigator = createStackNavigator({
   },
   InteractionManager: {
     screen: InteractionManager,
+  },
+  NonnativeAnimation: {
+    screen: NonnativeAnimation,
+  },
+  NativeAnimation: {
+    screen: NativeAnimation,
   },
 });
 
