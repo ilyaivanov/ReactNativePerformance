@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Dimensions, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import ArtistInfo from "../shared/ArtistInfo";
+import {ArtistInfo} from "../shared";
 
 export default class App extends Component {
   static navigationOptions = {

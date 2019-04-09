@@ -12,7 +12,6 @@ function ArtistInfo({
   name,
   isSelected,
   onPress,
-  imageProps
 }) {
   console.log("ArtistInfo.render");
   return (
@@ -87,6 +86,6 @@ const s = StyleSheet.create({
     borderRadius: BORDER_RADIUS,
     borderWidth: 4,
     borderColor: PRIMARY_COLOR,
-    borderStyle: "solid"
+    borderStyle: "solid",
   }
 });
