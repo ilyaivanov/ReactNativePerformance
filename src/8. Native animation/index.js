@@ -5,11 +5,12 @@ import {
   FlatList,
   View,
   NativeModules,
-  LayoutAnimation
+  LayoutAnimation,
+  Button
 } from "react-native";
 import ArtistInfo from "../shared/ArtistInfo";
 import { fetchArtist, updatePercents } from "../shared/api";
-import { HEADER_HEIGHT, ITEM_PADDING } from "../shared/constrants";
+import {HEADER_HEIGHT, ITEM_PADDING, PRIMARY_COLOR} from "../shared/constrants";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
 import styles from "../shared/styles";
 import Header from "../shared/Header";
@@ -23,7 +24,14 @@ class NativeAnimation extends React.Component {
     const { state } = navigation;
     const count = state.params ? state.params.artistsCount : 0;
     return {
-      title: `Native. Artists: ${count | 0}`
+      title: `Native. Artists: ${count | 0}`,
+      headerRight: (
+        <Button
+          onPress={navigation.getParam('toggleView')}
+          title="Columns"
+          color={PRIMARY_COLOR}
+        />
+      ),
     };
   };
 
@@ -35,6 +43,7 @@ class NativeAnimation extends React.Component {
   };
 
   componentDidMount() {
+    this.props.navigation.setParams({ toggleView: this.toggleView });
     this.loadMoreItems();
   }
 
@@ -86,6 +95,7 @@ class NativeAnimation extends React.Component {
     const numberOfColumns = nextColumns > maxColumns ? minColumns : nextColumns;
     LayoutAnimation.spring();
     this.setState({ numberOfColumns });
+    this.offset.setValue(0);
   };
 
   render() {
@@ -135,7 +145,6 @@ class NativeAnimation extends React.Component {
           artists={this.state.artists}
           selected={this.state.selected}
           style={this.headerStyle}
-          toggleView={this.toggleView}
         />
       </View>
     );

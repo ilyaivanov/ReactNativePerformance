@@ -23,7 +23,7 @@ const getSelectedListeners = (selected, artists) => {
 const numberWithSpaces = x =>
   x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-const Header = ({ selected, artists, style, toggleView }) => (
+const Header = ({ selected, artists, style }) => (
   <Animated.View
     style={[
       {
@@ -38,25 +38,6 @@ const Header = ({ selected, artists, style, toggleView }) => (
       style
     ]}
   >
-    {toggleView && (
-      <TouchableOpacity
-        style={{
-          position: "absolute",
-          top: 5,
-          right: 5,
-          borderRadius: BORDER_RADIUS,
-          padding: 5,
-          backgroundColor: tinycolor2(PRIMARY_COLOR)
-            .darken(20)
-            .toRgbString()
-        }}
-        onPress={toggleView}
-      >
-        <Text style={{ fontSize: 16, color: "rgba(255,255,255, 0.8)" }}>
-          Columns
-        </Text>
-      </TouchableOpacity>
-    )}
     <Text style={{ fontSize: 23, color: "white" }}>Lithuania top artists</Text>
     <Text style={{ fontSize: 16, color: "rgba(255,255,255, 0.8)" }}>
       Selected {selectedCount(selected, artists)} with total listeners{" "}
