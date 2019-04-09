@@ -53,7 +53,7 @@ const Header = ({ selected, artists, style, toggleView }) => (
         onPress={toggleView}
       >
         <Text style={{ fontSize: 16, color: "rgba(255,255,255, 0.8)" }}>
-          Toggle
+          Columns
         </Text>
       </TouchableOpacity>
     )}
